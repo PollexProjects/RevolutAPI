@@ -17,4 +17,8 @@ export default class Transaction extends RevolutEntity {
         this.scheduledAt = data.scheduled_at;
     }
 
+    updateLegs(legsData) {
+        this.legs = legsData.map(legData => new TransactionLeg(legData));
+    }
+
 }
