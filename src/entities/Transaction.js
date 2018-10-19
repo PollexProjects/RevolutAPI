@@ -4,7 +4,7 @@ import TransactionLeg from './TransactionLeg';
 export default class Transaction extends RevolutEntity {
 
     static GetResourcePath(id) {
-        return `/transactions/${id}`;
+        return id? `/transactions/${id}`:'/transactions';
     }
 
     update(data) {
