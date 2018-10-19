@@ -22,9 +22,9 @@ export default class RevolutBroker extends EventEmitter {
 
     async getResource({ resource, id = '' }) {
         try {
-            const { data } = await this.axios.get(resource.GetResourcePath());
-
-            console.log(data);
+            const { data } = await this.axios.get(
+                url.resolve(resource.GetResourcePath(), id)
+            );
 
             // Map data
             if (Array.isArray(data)) {
@@ -38,10 +38,12 @@ export default class RevolutBroker extends EventEmitter {
         }
     }
 
-    async getResourceRaw({ resource, id = '' }) {
+    async getResourceRaw({ path, id = '' }) {
         try {
-            const response = await Axios.get(this.apiUrl(resource, id))
-            return response.data;
+            const { data } = await this.axios.get(
+                url.resolve(path, id)
+            );
+            return data;
         } catch(error) {
             console.error(error);
         }
