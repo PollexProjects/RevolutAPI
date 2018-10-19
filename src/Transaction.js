@@ -7,7 +7,7 @@ export default class Transaction extends RevolutEntity {
     }
 
     update(data) {
-        super.update(data);
+        if (!super.update(data)) return;
         this.type = data.type;
         this.requestId = data.request_id;
         this.state = data.state;

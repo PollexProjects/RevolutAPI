@@ -7,7 +7,7 @@ export default class CounterAccount extends RevolutEntity {
     }
 
     update(data) {
-        super.update(data);
+        if (!super.update(data)) return;
         this.accountNo = data.account_no;
         this.routingNumber = data.routingNumber;
         this.sortCode = data.sort_code;

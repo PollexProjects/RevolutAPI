@@ -8,7 +8,7 @@ export default class CounterParty extends RevolutEntity {
     }
 
     update(data) {
-        super.update(data);
+        if (!super.update(data)) return;
         this.name = data.name;
         this.state = data.state;
 

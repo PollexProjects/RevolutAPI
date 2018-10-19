@@ -7,7 +7,7 @@ export default class Account extends RevolutEntity {
     }
 
     update(data) {
-        super.update(data);
+        if (!super.update(data)) return;
         this.id = data.id;
         this.balance = data.balance;
         this.currency = data.currency;
