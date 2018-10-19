@@ -1,8 +1,9 @@
 import RevolutEntity from './RevolutEntity';
 
 export default class Account extends RevolutEntity {
-    constructor() {
-        super();
+    
+    static GetResourcePath() {
+        return '/accounts';
     }
 
     update(data) {

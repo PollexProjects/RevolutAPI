@@ -1,12 +1,12 @@
 export default class RevolutEntity {
 
-    constructor(broker) {
+    constructor(data, broker) {
         this.broker = broker;
+        this.update(data);
     }
 
-    static CreateFrom(data, broker) {
-        const entity = new RevolutEntity(broker);
-        entity.update(data);
+    static GetResourcePath() {
+        throw new Error('Not implemented method in entity');
     }
 
     update(data) {

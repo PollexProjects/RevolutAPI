@@ -10,18 +10,27 @@ export default class RevolutBroker extends EventEmitter {
         this.debug = debug;
         this.apiBase = debug? 'https://sandbox-b2b.revolut.com/api/1.0' : 'https://b2b.revolut.com/api/1.0/';
 
+        this.axios = Axios.create({
+            baseURL: this.apiBase,
+            headers: {
+                'Authorization': 'Bearer ' + this.apiKey
+            }
+        })
+
         this.on('get-resource', this.getResource);
     }
 
     async getResource({ resource, id = '' }) {
         try {
-            const { data } = await Axios.get(this.apiUrl(resource.path, id))
+            const { data } = await this.axios.get(resource.GetResourcePath());
+
+            console.log(data);
 
             // Map data
             if (Array.isArray(data)) {
-                return data.map(entity => resource.CreateFrom(entity));
+                return data.map(entity => new resource(entity, this));
             } else {
-                return resource.CreateFrom(data);
+                return new resource(data, this);
             }
 
         } catch(error) {
@@ -36,10 +45,6 @@ export default class RevolutBroker extends EventEmitter {
         } catch(error) {
             console.error(error);
         }
-    }
-
-    apiUrl(...resources) {
-        return url.resolve(this.apiBase, ...resources);
     }
 
 }
