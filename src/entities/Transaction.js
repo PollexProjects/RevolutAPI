@@ -1,3 +1,5 @@
+const moment = require('moment');
+
 import RevolutEntity from './RevolutEntity';
 import TransactionLeg from './TransactionLeg';
 
@@ -14,8 +16,10 @@ export default class Transaction extends RevolutEntity {
         this.state = data.state;
         this.reasonCode = data.reason_code;
         this.reference = data.reference;
-        this.completedAt = data.completed_at;
-        this.scheduledAt = data.scheduled_at;
+        this.completedAt = moment(data.completed_at);
+        this.scheduledAt = moment(data.scheduled_at);
+
+        this.updateLegs(data.legs);
     }
 
     updateLegs(legsData) {
