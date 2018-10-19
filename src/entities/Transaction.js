@@ -23,7 +23,10 @@ export default class Transaction extends RevolutEntity {
     }
 
     updateLegs(legsData) {
-        this.legs = legsData.map(legData => new TransactionLeg(legData));
+        this.legs = legsData.map(legData => new TransactionLeg({
+            broker: this.broker,
+            data: legData
+        }));
     }
 
 }
