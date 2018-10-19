@@ -10,7 +10,6 @@
   "repository": "https://github.com/PollexProjects/RevolutAPI",
   "author": "Tim van Osch <timvosch@pollexprojects.nl>",
   "license": "AGPL-3.0",
-  "private": false,
   "devDependencies": {
     "@babel/cli": "^7.1.2",
     "@babel/core": "^7.1.2",
