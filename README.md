@@ -86,4 +86,4 @@ The library does not yet support entity creation or updating, neither does it su
 **However,** the library is in active development these features are soon to come.
 
 ## License
-This project is licensed under [APGL-V3.0](LICENSE).
+This project is licensed under [AGPL-V3.0](LICENSE).
