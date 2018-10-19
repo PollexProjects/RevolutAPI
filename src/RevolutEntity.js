@@ -1,3 +1,5 @@
+const moment = require('moment');
+
 export default class RevolutEntity {
 
     constructor(data, broker) {
@@ -10,9 +12,14 @@ export default class RevolutEntity {
     }
 
     update(data) {
+        // Ensure that the 'update' is newer
+        if (this.updatedAt >= moment(data.updated_at)) return false;
+
         this.id = data.id;
-        this.createdAt = data.created_at;
-        this.updatedAt = data.updated_at;
+        this.createdAt = moment(data.created_at);
+        this.updatedAt = moment(data.updated_at);
+
+        return true;
     }
 
 }
