@@ -1,0 +1,26 @@
+{
+  "name": "RevolutAPI",
+  "version": "0.1.0",
+  "description": "A facade to the revolut business API",
+  "scripts": {
+    "clean": "rimraf lib/",
+    "build": "yarn clean && babel src/ --out-dir lib/ --copy-files",
+    "test": "yarn build && mocha tests/"
+  },
+  "repository": "https://github.com/PollexProjects/RevolutAPI",
+  "author": "Tim van Osch <timvosch@pollexprojects.nl>",
+  "license": "AGPL-3.0",
+  "private": false,
+  "devDependencies": {
+    "@babel/cli": "^7.1.2",
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
+    "chai": "^4.2.0",
+    "eslint": "^5.6.1",
+    "mocha": "^5.2.0"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "dotenv": "^6.0.0"
+  }
+}
