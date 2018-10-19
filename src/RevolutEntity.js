@@ -14,7 +14,7 @@ export default class RevolutEntity {
     }
 
     update(data) {
-        if (this.id !== data.id) throw new DifferentEntityError();
+        if (this.id && this.id !== data.id) throw new DifferentEntityError();
         // Ensure that the 'update' is newer
         if (this.updatedAt >= moment(data.updated_at)) return false;
 
