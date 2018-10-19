@@ -30,6 +30,14 @@ export default class TransactionLeg extends RevolutEntity {
             broker: this.broker,
             id: data.counterparty.account_id
         });
+
+        // TEMP: Has counterAccount resolve async
+        // BUG: Therefore it takes some time before it's resolved
+        this.counterParty.get().then(party => {
+            this.counterAccount = party.accounts.filter(
+                account => account.id == data.counterparty.account_id
+            );
+        });
     }
 
 }
