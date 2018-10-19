@@ -3,7 +3,7 @@ import RevolutEntity from './RevolutEntity';
 export default class Account extends RevolutEntity {
 
     static GetResourcePath(id) {
-        return `/accounts/${id}`;
+        return id? `/accounts/${id}`:'/accounts';
     }
 
     update(data) {
