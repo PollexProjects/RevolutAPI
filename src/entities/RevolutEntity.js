@@ -12,12 +12,8 @@ export default class RevolutEntity {
         }
     }
 
-    async get() {
-        return await this.broker.getResource({ resource: this.constructor, id: this.id });
-    }
-
-    static GetResourcePath() {
-        throw new Error('Not implemented method in entity');
+    get() {
+        return this.broker.getResource({ resource: this.constructor, id: this.id });
     }
 
     update(data) {
@@ -30,6 +26,18 @@ export default class RevolutEntity {
         this.updatedAt = moment(data.updated_at);
 
         return true;
+    }
+
+    //
+    // Static methods
+    //
+
+    static GetAll(broker) {
+        return broker.getResource({ resource: this });
+    }
+
+    static GetResourcePath() {
+        throw new Error('Not implemented method in entity');
     }
 
 }
