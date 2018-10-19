@@ -20,11 +20,9 @@ export default class RevolutBroker extends EventEmitter {
         this.on('get-resource', this.getResource);
     }
 
-    async getResource({ resource, id = '' }) {
+    async getResource({ resource, id }) {
         try {
-            const { data } = await this.axios.get(
-                url.resolve(resource.GetResourcePath(), id)
-            );
+            const { data } = await this.axios.get(resource.GetResourcePath(id))
 
             // Map data
             if (Array.isArray(data)) {
