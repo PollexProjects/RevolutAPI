@@ -19,7 +19,8 @@ export default class CounterParty extends RevolutEntity {
         this.accounts = accountsData.map(
             accountData => new CounterAccount({
                 broker: this.broker,
-                data: accountData
+                data: accountData,
+                counterParty: this
             })
         );
     }

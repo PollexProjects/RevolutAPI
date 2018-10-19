@@ -2,6 +2,11 @@ import RevolutEntity from './RevolutEntity';
 
 export default class CounterAccount extends RevolutEntity {
 
+    constructor({ broker, id, data, counterParty }) {
+        super({ broker, id, data});
+        this.counterParty = counterParty;
+    }
+
     static GetResourcePath() {
         throw new Error('You should retrieve CounterAccounts through CounterParty entity');
     }
