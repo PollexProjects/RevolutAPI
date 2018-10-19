@@ -1,10 +1,10 @@
 import RevolutBroker from './RevolutBroker';
-import RevolutEntity from './RevolutEntity';
-import Account from './Account';
-import Transaction from './Transaction';
-import TransactionLeg from './TransactionLeg';
-import CounterParty from './CounterParty';
-import CounterAccount from './CounterAccount';
+import RevolutEntity from './entities/RevolutEntity';
+import Account from './entities/Account';
+import Transaction from './entities/Transaction';
+import TransactionLeg from './entities/TransactionLeg';
+import CounterParty from './entities/CounterParty';
+import CounterAccount from './entities/CounterAccount';
 
 export {
     RevolutBroker,

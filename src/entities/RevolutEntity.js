@@ -1,6 +1,6 @@
 const moment = require('moment');
 
-import { DifferentEntityError } from './errors';
+import { DifferentEntityError } from '../errors';
 
 export default class RevolutEntity {
 
