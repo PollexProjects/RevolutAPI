@@ -1,11 +1,9 @@
-const EventEmitter = require('events');
 const Axios = require('axios');
 const url = require('url');
 
-export default class RevolutBroker extends EventEmitter {
+export default class RevolutBroker {
 
     constructor(key, debug = false) {
-        super();
         this.apiKey = key;
         this.debug = debug;
         this.apiBase = debug? 'https://sandbox-b2b.revolut.com/api/1.0' : 'https://b2b.revolut.com/api/1.0/';
@@ -16,8 +14,6 @@ export default class RevolutBroker extends EventEmitter {
                 'Authorization': 'Bearer ' + this.apiKey
             }
         })
-
-        this.on('get-resource', this.getResource);
     }
 
     async getResource({ resource, id }) {
