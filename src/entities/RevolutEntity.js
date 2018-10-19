@@ -4,9 +4,16 @@ import { DifferentEntityError } from '../errors';
 
 export default class RevolutEntity {
 
-    constructor(data, broker) {
+    constructor({ broker, id, data }) {
         this.broker = broker;
-        this.update(data);
+        this.id = id;
+        if (data) {
+            this.update(data);
+        }
+    }
+
+    async get() {
+        return await this.broker.getResource({ resource: this.constructor, id: this.id });
     }
 
     static GetResourcePath() {
@@ -16,7 +23,7 @@ export default class RevolutEntity {
     update(data) {
         if (this.id && this.id !== data.id) throw new DifferentEntityError();
         // Ensure that the 'update' is newer
-        if (this.updatedAt >= moment(data.updated_at)) return false;
+        if (this.updatedAt && this.updatedAt >= moment(data.updated_at)) return false;
 
         this.id = data.id;
         this.createdAt = moment(data.created_at);

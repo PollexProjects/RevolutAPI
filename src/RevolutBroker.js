@@ -26,9 +26,14 @@ export default class RevolutBroker extends EventEmitter {
 
             // Map data
             if (Array.isArray(data)) {
-                return data.map(entity => new resource(entity, this));
+                return data.map(
+                    entity => new resource({
+                        broker: this,
+                        data: entity
+                    })
+                );
             } else {
-                return new resource(data, this);
+                return new resource({ broker: this, data });
             }
 
         } catch(error) {
