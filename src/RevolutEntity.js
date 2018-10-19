@@ -1,5 +1,7 @@
 const moment = require('moment');
 
+import { DifferentEntityError } from './errors';
+
 export default class RevolutEntity {
 
     constructor(data, broker) {
@@ -12,6 +14,7 @@ export default class RevolutEntity {
     }
 
     update(data) {
+        if (this.id !== data.id) throw new DifferentEntityError();
         // Ensure that the 'update' is newer
         if (this.updatedAt >= moment(data.updated_at)) return false;
 
