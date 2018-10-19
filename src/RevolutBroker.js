@@ -41,15 +41,4 @@ export default class RevolutBroker extends EventEmitter {
         }
     }
 
-    async getResourceRaw({ path, id = '' }) {
-        try {
-            const { data } = await this.axios.get(
-                url.resolve(path, id)
-            );
-            return data;
-        } catch(error) {
-            console.error(error);
-        }
-    }
-
 }
