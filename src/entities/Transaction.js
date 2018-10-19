@@ -1,4 +1,5 @@
 import RevolutEntity from './RevolutEntity';
+import TransactionLeg from './TransactionLeg';
 
 export default class Transaction extends RevolutEntity {
 
