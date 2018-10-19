@@ -4,6 +4,15 @@ import { DifferentEntityError } from '../errors';
 
 export default class RevolutEntity {
 
+    /**
+     * Provides a base-class for entities in the API.
+     * Providing an id will create an unresolved entity, which can be resolved
+     * by `.get()`.
+     * Providing data will map the APIs response data to this entity.
+     * @param {RevolutBroker} broker    The broker to use
+     * @param {UUID} id                 The entity's UUID
+     * @param {Object} data             The entity's data from the API
+     */
     constructor({ broker, id, data }) {
         this.broker = broker;
         this.id = id;
@@ -12,10 +21,19 @@ export default class RevolutEntity {
         }
     }
 
+    /**
+     * Get this entity from the API
+     * @return {RevolutEntity} The resolved entity
+     */
     get() {
         return this.broker.getResource({ resource: this.constructor, id: this.id });
     }
 
+    /**
+     * Updates this entity instance with the given data.
+     * @param  {Object} data    The entity's data from the API
+     * @return {Boolean}        True if the update was applied
+     */
     update(data) {
         if (this.id && this.id !== data.id) throw new DifferentEntityError();
         // Ensure that the 'update' is newer
@@ -31,14 +49,26 @@ export default class RevolutEntity {
     //
     // Static methods
     //
+    /**
+     * Get and resolve an entity by id from a broker
+     * @param {UUID} id                 The entity's ID
+     * @param {RevolutBroker} broker    The broker to use
+     */
     static Get(id, broker) {
         return broker.getResource({ resource: this, id });
     }
 
+    /**
+     * Get and resolve all of this entities from a broker
+     * @param {RevolutBroker} broker The broker to use
+     */
     static GetAll(broker) {
         return broker.getResource({ resource: this });
     }
 
+    /**
+     * Provides the entity's resource path on the API URL
+     */
     static GetResourcePath() {
         throw new Error('Not implemented method in entity');
     }
