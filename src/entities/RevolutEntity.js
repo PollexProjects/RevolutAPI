@@ -31,6 +31,9 @@ export default class RevolutEntity {
     //
     // Static methods
     //
+    static Get(id, broker) {
+        return broker.getResource({ resource: this, id });
+    }
 
     static GetAll(broker) {
         return broker.getResource({ resource: this });
