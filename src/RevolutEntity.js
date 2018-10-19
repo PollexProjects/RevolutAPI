@@ -10,6 +10,7 @@ export default class RevolutEntity {
     }
 
     update(data) {
+        this.id = data.id;
         this.createdAt = data.created_at;
         this.updatedAt = data.updated_at;
     }
