@@ -5,6 +5,10 @@ import CounterAccount from './CounterAccount';
 
 export default class TransactionLeg extends RevolutEntity {
 
+    static GetResourcePath() {
+        throw new Error('You should retrieve TransactionLegs through Transaction entity');
+    }
+
     update(data) {
         if (!super.update(data)) return;
         this.amount = data.amount;
