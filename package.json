@@ -7,7 +7,10 @@
     "build": "npm run clean && babel src/ --out-dir lib/ --copy-files",
     "test": "npm run build && mocha tests/"
   },
-  "repository": "https://github.com/PollexProjects/RevolutAPI",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PollexProjects/RevolutAPI.git"
+  },
   "author": "Tim van Osch <timvosch@pollexprojects.nl>",
   "license": "AGPL-3.0",
   "devDependencies": {
@@ -22,5 +25,22 @@
     "axios": "^0.18.0",
     "dotenv": "^6.0.0",
     "moment": "^2.22.2"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/PollexProjects/RevolutAPI/issues"
+  },
+  "homepage": "https://github.com/PollexProjects/RevolutAPI#readme",
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "tests"
+  },
+  "keywords": [
+    "Revolut",
+    "banking",
+    "api",
+    "interface",
+    "business",
+    "accounting"
+  ]
 }
