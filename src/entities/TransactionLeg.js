@@ -40,7 +40,7 @@ export default class TransactionLeg extends RevolutEntity {
         this.counterParty.get().then(party => {
             this.counterAccount = party.accounts.filter(
                 account => account.id == data.counterparty.account_id
-            );
+            )[0];
         });
     }
 
