@@ -1,5 +1,8 @@
 import RevolutEntity from './RevolutEntity';
 
+/*
+ If type is revolut then only the fields id, currency & type are available!
+ */
 export default class CounterAccount extends RevolutEntity {
 
     constructor({ broker, id, data, counterParty }) {
