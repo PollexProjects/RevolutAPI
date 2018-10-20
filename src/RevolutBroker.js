@@ -19,7 +19,7 @@ export default class RevolutBroker {
             headers: {
                 'Authorization': 'Bearer ' + this.apiKey
             }
-        })
+        });
     }
 
     /**
@@ -30,7 +30,7 @@ export default class RevolutBroker {
      */
     async getResource({ resource, id }) {
         try {
-            const { data } = await this.axios.get(resource.GetResourcePath(id))
+            const { data } = await this.axios.get(resource.GetResourcePath(id));
             // Map data
             if (Array.isArray(data)) {
                 return data.map(
