@@ -1,6 +1,9 @@
 const moment = require('moment');
 
-import { DifferentEntityError } from '../errors';
+import {
+    DifferentEntityError,
+    EntityDoesNotSupportCreationError
+} from '../errors';
 
 export default class RevolutEntity {
 
@@ -73,6 +76,10 @@ export default class RevolutEntity {
     // eslint-disable-next-line no-unused-vars
     static GetResourcePath(id) {
         throw new Error('Not implemented method in entity');
+    }
+
+    static Create() {
+        throw new EntityDoesNotSupportCreationError();
     }
 
 }
