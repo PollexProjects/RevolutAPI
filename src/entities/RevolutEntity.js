@@ -68,8 +68,10 @@ export default class RevolutEntity {
 
     /**
      * Provides the entity's resource path on the API URL
+     * @param {UUID} id Optional id to get a single entity.
      */
-    static GetResourcePath() {
+    // eslint-disable-next-line no-unused-vars
+    static GetResourcePath(id) {
         throw new Error('Not implemented method in entity');
     }
 
