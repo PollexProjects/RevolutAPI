@@ -1,5 +1,4 @@
 const Axios = require('axios');
-const url = require('url');
 
 export default class RevolutBroker {
 
