@@ -23,11 +23,11 @@ there are more amazing projects with Revolut Business waiting to be developed.
 This module is available in the NPM repository, just execute the below command
 to install it!
 
-```shell
+```sh
     $ npm i @pollex/revolut
 ```
 or
-```shell
+```sh
     $ yarn add @pollex/revolut
 ```
 
@@ -39,14 +39,14 @@ This module works with entities. Every resource is a subclass of [RevolutEntity]
 #### The broker
 The broker provides communication from your entities to the API. To setup this broker all you need is your API key.
 
-```node
+```js
     const { RevolutBroker } = require('@pollex/revolut');
     const broker = new RevolutBroker('your-key-here');
 ```
 
 The broker constructor also support an optional boolean *debug*. With debug mode all your interaction will be through the Revolut API **sandbox**. Make sure to use this while testing!
 
-```node
+```js
     new RevolutBroker('your-key-here', true);
 ```
 
@@ -63,7 +63,7 @@ If you had a peek in the `src/entities/` folder, you'll notice that there are mo
 ##### Entity fetching example
 Because all entities extend from the RevolutEntity, they are easy and similar in usage. Let's retrieve all our accounts.
 
-```node
+```js
     // Import the RevolutBroker and the Account entity
     const { RevolutBroker, Account } = require('@pollex/revolut');
 
