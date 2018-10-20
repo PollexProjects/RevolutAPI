@@ -20,7 +20,7 @@ export default class CounterAccount extends RevolutEntity {
         this.routingNumber = data.routingNumber;
         this.sortCode = data.sort_code;
         this.iban = data.iban;
-        this.bix = data.bic;
+        this.bic = data.bic;
         this.type = data.type;
         this.email = data.email;
         this.name = data.name;
