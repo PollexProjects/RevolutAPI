@@ -39,11 +39,12 @@ export default class RevolutEntity {
      * @return {Boolean}        True if the update was applied
      */
     update(data) {
-        if (this.id && this.id !== data.id) throw new DifferentEntityError();
+        if (this.id && this.id !== data[this.constructor.GetIdPropertyName()]) throw new DifferentEntityError();
         // Ensure that the 'update' is newer
         if (this.updatedAt && this.updatedAt >= moment(data.updated_at)) return false;
 
-        this.id = data.id;
+        // Update property, in-case id was not set yet.
+        this.id = data[this.constructor.GetIdPropertyName()];
         this.createdAt = moment(data.created_at);
         this.updatedAt = moment(data.updated_at);
 
@@ -70,6 +71,10 @@ export default class RevolutEntity {
         return broker.getResource({ resource: this });
     }
 
+    static Create() {
+        throw new EntityDoesNotSupportCreationError();
+    }
+
     /**
      * Provides the entity's resource path on the API URL
      * @param {UUID} id Optional id to get a single entity.
@@ -79,8 +84,8 @@ export default class RevolutEntity {
         throw new NotImplementedInEntityError();
     }
 
-    static Create() {
-        throw new EntityDoesNotSupportCreationError();
+    static GetIdPropertyName() {
+        return 'id';
     }
 
 }

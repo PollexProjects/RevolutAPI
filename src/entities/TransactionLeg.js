@@ -9,6 +9,10 @@ export default class TransactionLeg extends RevolutEntity {
         throw new Error('You should retrieve TransactionLegs through Transaction entity');
     }
 
+    static GetIdPropertyName() {
+        return 'leg_id';
+    }
+
     update(data) {
         if (!super.update(data)) return;
         this.amount = data.amount;
