@@ -1,4 +1,4 @@
-Revolut Business API
+Revolut Business API_KEY
 ---
 *A Node.JS module by Pollex*
 
@@ -10,14 +10,6 @@ and perform similar actions as well.
 ### What?
 This module provides an interface to the Revolut Business API, which can be used
 in a Node.JS application or even a client-side browser.
-
-### Why?
-Pollex' project [RevIO](https://github.com/PollexProjects/RevIO) provides a link
-between the free accounting software [Manager.IO](https://manager.io/) and your
-Revolut Business account.
-However for this project this interface was a requirement, therefore it was decided
-that this interface will be developed as a separate module, as I am sure that
-there are more amazing projects with Revolut Business waiting to be developed.
 
 ### Installing
 This module is available in the NPM repository, just execute the below command
@@ -31,76 +23,56 @@ or
     $ yarn add @pollex/revolut
 ```
 
+### Wiki
+This ReadMe contains the basics, head over to the [Github Wiki](https://github.com/PollexProjects/RevolutAPI/wiki) for more information!
 
-### Using
-*(TODO: This section needs more work)*  
-This module works with entities. Every resource is a subclass of [RevolutEntity](src/entities/RevolutEntity.js). Then there is a [RevolutBroker](src/RevolutBroker.js), this broker provides the communication from the entities to the actual Revolut API. The broker also holds your API key.
+### Usage
+Let's get you up and running quickly. Starting with the most important part of this library, the RevolutBroker. The broker handles the main communication between the API and this library. This is also where you put your API key and optionally enable debug/sandbox mode.
 
-#### The broker
-The broker provides communication from your entities to the API. To setup this broker all you need is your API key.
+**Identified vs Resolved**  
+A.K.A. why doesn't my entity have information. Ideally every entity is synchronised with the API, this however is not the case. Instead, every time you need an entity you can *resolve* it with `.get()`, which returns a promise containing the entity with it's latest information from the API.
 
+Instead of returning a promise every time you want to reference an entity, you get an identified entity. This means the entity only contains the entity' *id* and not it's properties. If you need it's properties, you will need to resolve it with `.get()`.
+
+#### Examples!
+**The broker**  
+Let's start with creating the broker, the most important piece:
 ```js
     const { RevolutBroker } = require('@pollex/revolut');
-    const broker = new RevolutBroker('your-key-here');
+    // Optional extra boolean parameter indicating sandbox mode.
+    const broker = new RevolutBroker('YOU API KEY HERE');
 ```
 
-The broker constructor also support an optional boolean *debug*. With debug mode all your interaction will be through the Revolut API **sandbox**. Make sure to use this while testing!
+Every entity needs a broker, however the broker is automagically passed to related entities. So you won't have to use it constantly!
 
+**Retrieving accounts**  
+So I would like to know my business accounts:
 ```js
-    new RevolutBroker('your-key-here', true);
-```
+    const { Account } = require('@pollex/revolut');
 
-#### Entities
-Every entity is extended from the [RevolutEntity](src/entities/RevolutEntity.js) class. This class provides the base for all entities.  
-Don't worry you probably don't have to use this class directly, instead you'll be using one of the already implemented entities:
-
- - [Account](src/entities/Account.js)
- - [CounterParty](src/entities/CounterParty.js)
- - [Transaction](src/entities/Transaction.js)
-
-If you had a peek in the `src/entities/` folder, you'll notice that there are more entities. These entities are not supposed to be interacted with directly.
-
-##### Entity fetching example
-Because all entities extend from the RevolutEntity, they are easy and similar in usage. Let's retrieve all our accounts.
-
-```js
-    // Import the RevolutBroker and the Account entity
-    const { RevolutBroker, Account } = require('@pollex/revolut');
-
-    // Instantiate the RevolutBroker with our API Key
-    // and we want to use the sandbox API.
-    const broker = new RevolutBroker(process.env.API_KEY, true);
-
-    // Retrieve all accounts
+    // broker defined as previous example
+    // GetAll returns a promise!
     Account.GetAll(broker)
-        .then(accounts => {
-            console.log(accounts)
+        .then( accounts => {
+            // accounts is an Array of Account objects :)
         });
 ```
 
-**note:** The library uses the *async* and *await* keywords.
-
-##### Transfering
-Transfering, in Revolut API terms, means sending money from one of your accounts to another with the restriction that both accounts have the same currency. So no exchanging!
+**Paying to a CounterParty**  
+Paying requires you to have an Account to pay from and a CounterAccount, which is the account of the counterparty to pay to. However a CounterAccount can't be resolved directly. Instead you have to resolve a CounterParty and get the account from the `.accounts` property.
 
 ```js
-    // Create to identified entities
-    const officeAccountIdentified = Account.get('ID-Here', broker);
-    const prAccountIdentified = Account.get('ID-Here', broker);
-
-    // Resolve both entities
-    Promise.all([
-        officeAccountIdentified.get(),
-        prAccountIdentified.get()
-    ])
-        .then(([officeAccount, prAccount]) => {
-            // transfer 50$ from office to pr account
-            const transfer =
-                officeAccount.transfer(prAccount, 50, 'Reference #100011');
-            // Execute returns an identified Transaction entity
-            const transaction = transfer.execute();
+    // Assuming you have an Account and CounterAccount entity
+    const payment = Account.pay(counterAccount, 12.50, 'Optional reference text');
+    // A payment is not executed on creation
+    payment.execute()
+        .then(transaction => {
+            // executing returns a promise resolving in the created transaction
+            // ...
         });
 ```
 
-## License
-This project is licensed under [AGPL-V3.0](LICENSE).
+**For more information like transfering money and retrieving counterparties and -accounts, see the [wiki on github](https://github.com/PollexProjects/RevolutAPI/wiki)!**
+
+# License
+This library is licensed under AGPL-3.0
