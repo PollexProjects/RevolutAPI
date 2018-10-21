@@ -54,4 +54,8 @@ export default class RevolutBroker {
         return this.axios.get(path);
     }
 
+    postResource(path, body) {
+        return this.axios.post(path, body);
+    }
+
 }

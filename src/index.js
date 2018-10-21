@@ -5,6 +5,7 @@ import Transaction from './entities/Transaction';
 import TransactionLeg from './entities/TransactionLeg';
 import CounterParty from './entities/CounterParty';
 import CounterAccount from './entities/CounterAccount';
+import Transfer from './Transfer';
 
 export {
     RevolutBroker,
@@ -13,5 +14,6 @@ export {
     Transaction,
     TransactionLeg,
     CounterParty,
-    CounterAccount
+    CounterAccount,
+    Transfer
 };
