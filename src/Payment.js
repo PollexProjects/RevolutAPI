@@ -20,6 +20,7 @@ export default class Payment {
     }
 
     async execute() {
+        // TODO: verify target and source are same currency
         const { data } = await this.broker.postResource(this.resourcePath, this.format());
         return Transaction.Get(data.id, this.broker);
     }
