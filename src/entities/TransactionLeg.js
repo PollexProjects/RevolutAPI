@@ -23,6 +23,12 @@ export default class TransactionLeg extends RevolutEntity {
             broker: this.broker,
             id: data.account_id
         });
+        if (data.counterparty) {
+            this.updateCounterParty(data);
+        }
+    }
+
+    updateCounterParty(data) {
         this.counterParty = new CounterParty({
             broker: this.broker,
             id: data.counterparty.id
