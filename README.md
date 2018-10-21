@@ -1,4 +1,4 @@
-Revolut Business API_KEY
+Revolut Business Module
 ---
 *A Node.JS module by Pollex*
 
