@@ -30,7 +30,7 @@ export default class RevolutEntity {
      * @return {RevolutEntity} The resolved entity
      */
     get() {
-        return this.broker.getResource({ resource: this.constructor, id: this.id });
+        return this.broker.getEntity({ entityType: this.constructor, id: this.id });
     }
 
     /**
@@ -60,7 +60,7 @@ export default class RevolutEntity {
      * @param {RevolutBroker} broker    The broker to use
      */
     static Get(id, broker) {
-        return broker.getResource({ resource: this, id });
+        return broker.getEntity({ entityType: this, id });
     }
 
     /**
@@ -68,7 +68,7 @@ export default class RevolutEntity {
      * @param {RevolutBroker} broker The broker to use
      */
     static GetAll(broker) {
-        return broker.getResource({ resource: this });
+        return broker.getEntity({ entityType: this });
     }
 
     static Create() {

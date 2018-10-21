@@ -23,27 +23,35 @@ export default class RevolutBroker {
 
     /**
      * Fetches all or a single RevolutEntity from the API
+     * @param  {RevolutEntity}  entityType    The entity to fetch
+     * @param  {UUID}  id                   Optional ID will fetch a specific entity
+     * @return {Promise}                    Promise resolving in the given resource
+     */
+    async getEntity({ entityType, id }) {
+        // TODO: catch errors
+        const { data } = await this.getResource(entityType.GetResourcePath(id));
+        // Map data
+        if (Array.isArray(data)) {
+            return data.map(
+                entity => new entityType({
+                    broker: this,
+                    data: entity
+                })
+            );
+        } else {
+            return new entityType({ broker: this, data });
+        }
+    }
+
+    /**
+     * Fetches all or a single RevolutEntity from the API
      * @param  {RevolutEntity}  resource    The entity to fetch
      * @param  {UUID}  id                   Optional ID will fetch a specific entity
      * @return {Promise}                    Promise resolving in the given resource
      */
-    async getResource({ resource, id }) {
-        try {
-            const { data } = await this.axios.get(resource.GetResourcePath(id));
-            // Map data
-            if (Array.isArray(data)) {
-                return data.map(
-                    entity => new resource({
-                        broker: this,
-                        data: entity
-                    })
-                );
-            } else {
-                return new resource({ broker: this, data });
-            }
-        } catch(error) {
-            console.error(error);
-        }
+    getResource(path) {
+        // TODO: catch errors
+        return this.axios.get(path);
     }
 
 }
