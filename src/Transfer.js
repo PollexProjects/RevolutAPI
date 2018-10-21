@@ -2,6 +2,7 @@ const uuidv4 = require('uuid/v4');
 
 import Currency from './Currency';
 import Account from './entities/Account';
+import Transaction from './entities/Transaction';
 import { InvalidAmountError } from './errors/InvalidAmountError';
 
 export default class Transfer {
@@ -16,8 +17,9 @@ export default class Transfer {
         this.resourcePath = '/transfer';
     }
 
-    execute() {
-        return this.broker.postResource(this.resourcePath, this.format());
+    async execute() {
+        const { data } = await this.broker.postResource(this.resourcePath, this.format());
+        return Transaction.Get(data.id, this.broker);
     }
 
     format() {
