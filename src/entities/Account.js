@@ -1,5 +1,6 @@
 import RevolutEntity from './RevolutEntity';
 import Transfer from '../Transfer';
+import Payment from '../Payment';
 
 export default class Account extends RevolutEntity {
 
@@ -30,6 +31,18 @@ export default class Account extends RevolutEntity {
             broker: this.broker,
             source: this,
             target: to,
+            amount,
+            reference,
+            currency: this.currency
+        });
+    }
+
+    pay(to, amount, reference) {
+        return new Payment({
+            broker: this.broker,
+            source: this,
+            counterParty: to.counterParty,
+            counterAccount: to,
             amount,
             reference,
             currency: this.currency
