@@ -80,10 +80,27 @@ Because all entities extend from the RevolutEntity, they are easy and similar in
 
 **note:** The library uses the *async* and *await* keywords.
 
-##### Entity creating example
-The library does not yet support entity creation or updating, neither does it support transaction creation.  
+##### Transfering
+Transfering, in Revolut API terms, means sending money from one of your accounts to another with the restriction that both accounts have the same currency. So no exchanging!
 
-**However,** the library is in active development these features are soon to come.
+```js
+    // Create to identified entities
+    const officeAccountIdentified = Account.get('ID-Here', broker);
+    const prAccountIdentified = Account.get('ID-Here', broker);
+
+    // Resolve both entities
+    Promise.all([
+        officeAccountIdentified.get(),
+        prAccountIdentified.get()
+    ])
+        .then(([officeAccount, prAccount]) => {
+            // transfer 50$ from office to pr account
+            const transfer =
+                officeAccount.transfer(prAccount, 50, 'Reference #100011');
+            // Execute returns an identified Transaction entity
+            const transaction = transfer.execute();
+        });
+```
 
 ## License
 This project is licensed under [AGPL-V3.0](LICENSE).
