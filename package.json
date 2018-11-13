@@ -5,7 +5,7 @@
   "scripts": {
     "clean": "rimraf lib/",
     "build": "npm run clean && babel src/ --out-dir lib/ --copy-files",
-    "test": "npm run build && mocha tests/",
+    "test": "npm run build && mocha --compilers @babel/register tests/",
     "buildDocs": "rimraf docs/ && esdoc"
   },
   "repository": {
@@ -18,12 +18,14 @@
     "@babel/cli": "^7.1.2",
     "@babel/core": "^7.1.2",
     "@babel/preset-env": "^7.1.0",
+    "@babel/register": "^7.0.0",
     "chai": "^4.2.0",
     "esdoc": "^1.1.0",
     "esdoc-named-import-plugin": "^0.0.0",
     "esdoc-standard-plugin": "^1.0.0",
     "eslint": "^5.6.1",
-    "mocha": "^5.2.0"
+    "mocha": "^5.2.0",
+    "sinon": "^7.1.1"
   },
   "dependencies": {
     "axios": "^0.18.0",

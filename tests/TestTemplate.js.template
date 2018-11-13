@@ -1,0 +1,22 @@
+/* eslint-env node, mocha */
+const expect = require('chai').expect;
+const sinon = require('sinon');
+const { RevolutBroker } = require('../src');
+
+describe('[Class name]', function() {
+    before(function() {
+        // Mocking
+
+    });
+
+    describe('[Method name]', function() {
+        it('Should ', function() {
+            // Arrange
+
+            // Act
+
+            // Assert
+
+        });
+    });
+});
