@@ -1,5 +1,5 @@
 Revolut Business Module
----
+--- 
 [![Build Status](http://jenkins.pollexprojects.nl/buildStatus/icon?job=RevolutAPI/master)](http://jenkins.pollexprojects.nl/job/RevolutAPI/job/master/)  
 *A Node.JS module by Pollex*
 
