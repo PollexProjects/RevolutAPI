@@ -68,8 +68,7 @@ Paying requires you to have an Account to pay from and a CounterAccount, which i
     // A payment is not executed on creation
     payment.execute()
         .then(transaction => {
-            // executing returns a promise resolving in the created transaction
-            // ...
+            // Executing a payment will result in an identified transaction
         });
 ```
 
