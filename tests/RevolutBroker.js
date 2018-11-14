@@ -1,7 +1,7 @@
 /* eslint-env node, mocha */
 const expect = require('chai').expect;
 const sinon = require('sinon');
-const { RevolutBroker, RevolutEntity } = require('../src');
+const { RevolutBroker } = require('../src');
 
 describe('RevolutBroker', function() {
     /**
