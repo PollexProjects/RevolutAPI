@@ -4,124 +4,113 @@ const sinon = require('sinon');
 const { RevolutBroker, RevolutEntity } = require('../src');
 
 describe('RevolutBroker', function() {
-    beforeEach(function() {
+    /**
+     * Setup constants
+     */
+    before(function() {
         // Constants
+        this.broker = new RevolutBroker();
         this.productionUrl = 'https://b2b.revolut.com/api/1.0/';
         this.devUrl = 'https://sandbox-b2b.revolut.com/api/1.0';
-        this.broker = new RevolutBroker('AAAA');
-        // Mocking
+        // Generic get request result
+        this.entityObject = {
+            data: {
+                id: '1111-1111-1111-1111'
+            }
+        };
     });
+    /**
+     * Setup mocks every test
+     */
+    beforeEach(function() {
+        // Create Spies
+        this.MockEntityType = sinon.spy();
+        this.MockEntityType.GetResourcePath = () => { return '/MockEntity'; };
+        // Create stubs
+        sinon.stub(this.broker, 'getResource');
+        sinon.stub(this.broker, 'postResource');
+        sinon.stub(this.broker.axios, 'get');
+        sinon.stub(this.broker.axios, 'post');
+        // Implement stubs
+        this.broker.getResource
+            .callThrough();
+        this.broker.getResource
+            .withArgs('/')
+            .resolves({ data: {} });
+        this.broker.getResource
+            .withArgs('/MockEntity')
+            .resolves(this.entityObject);
 
+        this.broker.postResource.callThrough();
+        this.broker.axios.post.resolves({ data: {} });
+
+        this.broker.axios.get
+            .resolves({ data: {} });
+        this.broker.axios.post
+            .resolves({ data: {} });
+    });
+    /**
+     * Restore mocks every test
+     */
     afterEach(function() {
         sinon.restore();
     });
-
     describe('#getResource', function() {
         it('Should send GET request to correct url', function(done) {
             // Arrange
-            const axiosGetStub = sinon.stub(this.broker.axios, 'get').resolves({ data: {} });
             // Act
-            this.broker.getResource('/')
+            this.broker.getResource('/passthrough')
                 .then(() => {
                     // Assert
-                    expect(axiosGetStub.called).to.be.true;
-                    expect(axiosGetStub.lastCall.args[0]).to.equal('/');
+                    expect(this.broker.axios.get.withArgs('/passthrough').called).to.be.true;
                     done();
                 })
                 .catch(done);
         });
     });
     describe('#postResource', function() {
-        it('Should send POST request to correct url', function(done) {
+        it('Should send POST request to correct url with body', function(done) {
             // Arrange
-            const axiosPostStub = sinon.stub(this.broker.axios, 'post').resolves({ data: {} });
             // Act
-            this.broker.postResource('/', {})
+            this.broker.postResource('/passthrough', {})
                 .then(() => {
                     // Assert
-                    expect(axiosPostStub.called).to.be.true;
-                    expect(axiosPostStub.lastCall.args[0]).to.equal('/');
-                    done();
-                })
-                .catch(done);
-        });
-        it('Should send body', function(done) {
-            // Arrange
-            // Arrange
-            const axiosPostStub = sinon.stub(this.broker.axios, 'post').resolves({ data: {} });
-            const body = { id: 1234 };
-            // Act
-            this.broker.postResource('/', body)
-                .then(() => {
-                    // Assert
-                    expect(axiosPostStub.called).to.be.true;
-                    expect(axiosPostStub.lastCall.args[1]).to.equal(body);
+                    expect(this.broker.axios.post.withArgs('/passthrough', {}).called).to.be.true;
                     done();
                 })
                 .catch(done);
         });
     });
     describe('#getEntity', function() {
-        beforeEach(function() {
-            // Mock
-            // Every get request returns this result
-            this.entityObject = {
-                data: {
-                    id: '1111-1111-1111-1111'
-                }
-            };
-            // This function makes the axios request.
-            this.broker.getResource = sinon.stub().resolves(this.entityObject);
-        });
-
         it('Should make a request to the entities resource path', function(done) {
             // Arrange
-            const requestPath = 'requestPath';
-            // Mocking
-            const entity = sinon.fake();
-            entity.GetResourcePath = sinon.fake.returns(requestPath);
             // Act
-            this.broker.getEntity({
-                entityType: entity
-            }).then(() => {
+            this.broker.getEntity({ entityType: this.MockEntityType }).then(() => {
                 // Assert
-                // Ensure functions is called
-                expect(entity.called).to.be.true;
-                expect(entity.GetResourcePath.called).to.be.true;
-                // Expect the final request to be with the requestPath we provide
-                expect(this.broker.getResource.withArgs(requestPath).called).to.be.true;
+                expect(this.broker.getResource.withArgs(this.MockEntityType.GetResourcePath()).called).to.be.true;
                 done();
-            })
-                .catch(done);
+            }).catch(done);
         });
-
         it('Should return instance of given constructor', function(done){
             // Arrange
-            class MockEntity extends RevolutEntity {}
-            // Mocking
-            sinon.stub(MockEntity, 'GetResourcePath').returns('');
             // Act
-            this.broker.getEntity({ entityType: MockEntity })
+            this.broker.getEntity({ entityType: this.MockEntityType })
                 .then(result => {
                     // Assert
-                    expect(result).to.be.instanceOf(MockEntity);
+                    expect(result).to.be.instanceOf(this.MockEntityType);
                     done();
                 }).catch(done);
         });
-
         it('Should call constructor with broker and data', function(done){
             // Arrange
-            const MockEntity = sinon.spy();
-            // Mocking
-            MockEntity.GetResourcePath = sinon.fake.returns('');
             // Act
-            this.broker.getEntity({ entityType: MockEntity })
+            this.broker.getEntity({ entityType: this.MockEntityType })
                 .then(() => {
                     // Assert
-                    expect(MockEntity.withArgs({
+                    expect(this.MockEntityType.withArgs({
                         broker: this.broker,
                         data: this.entityObject.data
-                    }).calledOnce).to.be.true;
+                    }).called).to.be.true;
                     // Finish
                     done();
                 }).catch(done);
