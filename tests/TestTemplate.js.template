@@ -1,14 +1,37 @@
 /* eslint-env node, mocha */
 const expect = require('chai').expect;
 const sinon = require('sinon');
+const uuid4 = require('uuid/v4');
 const { RevolutBroker } = require('../src');
 
 describe('[Class name]', function() {
+    /**
+     * Setup constants
+     */
     before(function() {
-        // Mocking
+        // Constants
+        this.broker = new RevolutBroker();
+        // Utility function
+        this.constructorParameters = (other) => {
+            return {
+                id: uuid4(),
+                broker: this.broker,
+                ...other
+            };
+        };
+    });
+    /**
+     * Setup mocking
+     */
+    before(function() {
 
     });
-
+    /**
+     * Restore mocks
+     */
+    after(function() {
+        sinon.restore();
+    });
     describe('[Method name]', function() {
         it('Should ', function() {
             // Arrange
