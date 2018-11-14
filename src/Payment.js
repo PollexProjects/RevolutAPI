@@ -48,7 +48,7 @@ export default class Payment {
         return this._source;
     }
     set source(account) {
-        this.expectAccountInstance(account);
+        this.constructor.expectAccountInstance(account);
         this._source = account;
     }
 
@@ -56,7 +56,7 @@ export default class Payment {
         return this._counterParty;
     }
     set counterParty(counterParty) {
-        this.expectCounterPartyInstance(counterParty);
+        this.constructor.expectCounterPartyInstance(counterParty);
         this._counterParty = counterParty;
     }
 
@@ -64,7 +64,7 @@ export default class Payment {
         return this._counterAccount;
     }
     set counterAccount(counterAccount) {
-        this.expectCounterAccountInstance(counterAccount);
+        this.constructor.expectCounterAccountInstance(counterAccount);
         this._counterAccount = counterAccount;
     }
 
@@ -72,7 +72,7 @@ export default class Payment {
         return this._amount;
     }
     set amount(amount) {
-        this.expectPositiveAmount(amount);
+        this.constructor.expectPositiveAmount(amount);
         this._amount = amount;
     }
 
@@ -89,7 +89,7 @@ export default class Payment {
     /**
       * @private
       */
-    expectAccountInstance(account) {
+    static expectAccountInstance(account) {
         if (!(account instanceof Account)) {
             throw new TypeError('Transfer target should be instance of Account');
         }
@@ -98,7 +98,7 @@ export default class Payment {
     /**
     * @private
     */
-    expectCounterPartyInstance(counterParty) {
+    static expectCounterPartyInstance(counterParty) {
         if (!(counterParty instanceof CounterParty)) {
             throw new TypeError('Transfer target should be instance of Account');
         }
@@ -107,7 +107,7 @@ export default class Payment {
     /**
     * @private
     */
-    expectCounterAccountInstance(counterAccount) {
+    static expectCounterAccountInstance(counterAccount) {
         if (!(counterAccount instanceof CounterAccount)) {
             throw new TypeError('Transfer target should be instance of Account');
         }
@@ -116,7 +116,7 @@ export default class Payment {
     /**
       * @private
       */
-    expectPositiveAmount(amount) {
+    static expectPositiveAmount(amount) {
         if (amount <= 0) {
             throw new InvalidAmountError('Transfer amount should be positive');
         }
