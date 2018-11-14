@@ -24,7 +24,7 @@ export default class Payment {
             this.constructor.GetResourcePath(),
             this.format()
         );
-        return Transaction.Get(data.id, this.broker);
+        return new Transaction({ id: data.id, broker: this.broker });
     }
 
     format() {
