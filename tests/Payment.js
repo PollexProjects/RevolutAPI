@@ -53,7 +53,7 @@ describe('Payment', function() {
     /**
      * Setup mocks
      */
-    before(function() {
+    beforeEach(function() {
         // Create spies
         sinon.spy(Payment, 'expectAccountInstance');
         sinon.spy(Payment, 'expectCounterPartyInstance');
@@ -71,7 +71,7 @@ describe('Payment', function() {
     /**
      * Restore mocks
      */
-    after(function() {
+    afterEach(function() {
         sinon.restore();
     });
     describe('Constructor', function() {

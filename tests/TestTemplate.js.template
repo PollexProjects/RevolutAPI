@@ -21,15 +21,15 @@ describe('[Class name]', function() {
         };
     });
     /**
-     * Setup mocking
+     * Setup mocking every test
      */
-    before(function() {
-
+    beforeEach(function() {
+        
     });
     /**
-     * Restore mocks
+     * Restore mocks every test
      */
-    after(function() {
+    afterEach(function() {
         sinon.restore();
     });
     describe('[Method name]', function() {
