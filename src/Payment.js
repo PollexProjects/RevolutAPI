@@ -16,12 +16,14 @@ export default class Payment {
         this.amount = amount;
         this.currency = currency;
         this.reference = reference;
-        this.resourcePath = '/pay';
     }
 
     async execute() {
         // TODO: verify target and source are same currency
-        const { data } = await this.broker.postResource(this.resourcePath, this.format());
+        const { data } = await this.broker.postResource(
+            this.constructor.GetResourcePath(),
+            this.format()
+        );
         return Transaction.Get(data.id, this.broker);
     }
 
@@ -119,5 +121,9 @@ export default class Payment {
             throw new InvalidAmountError('Transfer amount should be positive');
         }
         return true;
+    }
+
+    static GetResourcePath() {
+        return '/pay';
     }
 }
