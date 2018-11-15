@@ -37,7 +37,7 @@ export default class Account extends RevolutEntity {
         });
     }
 
-    pay(to, amount, reference) {
+    pay(to, amount, reference = '') {
         return new Payment({
             broker: this.broker,
             source: this,
