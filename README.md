@@ -1,6 +1,6 @@
 Revolut Business Module
 --- 
-[![Build Status](http://jenkins.pollexprojects.nl/buildStatus/icon?job=RevolutAPI/master)](http://jenkins.pollexprojects.nl/job/RevolutAPI/job/master/)  
+[![Build Status](http://jenkins.pollex.nl/buildStatus/icon?job=RevolutAPI/master)](http://jenkins.pollex.nl/job/RevolutAPI/job/master/)  
 *A Node.JS module by Pollex*
 
 [Revolut](https://www.revolut.com/) introduced it's
@@ -68,8 +68,7 @@ Paying requires you to have an Account to pay from and a CounterAccount, which i
     // A payment is not executed on creation
     payment.execute()
         .then(transaction => {
-            // executing returns a promise resolving in the created transaction
-            // ...
+            // Executing a payment will result in an identified transaction
         });
 ```
 
